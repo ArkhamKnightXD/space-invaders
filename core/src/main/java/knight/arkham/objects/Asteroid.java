@@ -8,13 +8,13 @@ import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.Box2DHelper;
 import knight.arkham.scenes.Hud;
 
-public class Brick extends GameObject {
+public class Asteroid extends GameObject {
     private boolean isDestroyed;
     private boolean setToDestroy;
     private final int brickPoints;
     private final Rectangle drawBounds;
 
-    public Brick(int positionX, int positionY, World world, String spritePath, int brickPoints) {
+    public Asteroid(int positionX, int positionY, World world, String spritePath, int brickPoints) {
         super(
             new Rectangle(
                 515 + positionX,

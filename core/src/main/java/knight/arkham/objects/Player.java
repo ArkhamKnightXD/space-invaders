@@ -20,22 +20,22 @@ public class Player extends GameObject {
     @Override
     protected Body createBody() {
         return Box2DHelper.createBody(
-            new Box2DBody(actualBounds, 10, actualWorld, this)
+            new Box2DBody(actualBounds, 5, actualWorld, this)
         );
     }
 
     public void update() {
 
-        if (Gdx.input.isKeyPressed(Input.Keys.D) && body.getLinearVelocity().x <= 10)
+        if (Gdx.input.isKeyPressed(Input.Keys.D) && body.getLinearVelocity().x <= 5)
             applyLinealImpulse(new Vector2(3, 0));
 
-        else if (Gdx.input.isKeyPressed(Input.Keys.A) && body.getLinearVelocity().x >= -10)
+        else if (Gdx.input.isKeyPressed(Input.Keys.A) && body.getLinearVelocity().x >= -5)
             applyLinealImpulse(new Vector2(-3, 0));
 
-        else if (Gdx.input.isKeyPressed(Input.Keys.W) && body.getLinearVelocity().x >= -10)
+        else if (Gdx.input.isKeyPressed(Input.Keys.W) && body.getLinearVelocity().x >= -5)
             applyLinealImpulse(new Vector2(0, 3));
 
-        else if (Gdx.input.isKeyPressed(Input.Keys.S) && body.getLinearVelocity().x >= -10)
+        else if (Gdx.input.isKeyPressed(Input.Keys.S) && body.getLinearVelocity().x >= -5)
             applyLinealImpulse(new Vector2(0, -3));
 
     }
