@@ -43,7 +43,7 @@ public class GameScreen extends ScreenAdapter {
 
         world.setContactListener(contactListener);
 
-        player = new Player(new Rectangle(950, 600, 32, 32), world);
+        player = new Player(new Rectangle(950, 350, 32, 32), world);
 
         winSound = AssetsHelper.loadSound("win.wav");
 

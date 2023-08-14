@@ -1,7 +1,7 @@
 package knight.arkham.helpers;
 
 import com.badlogic.gdx.physics.box2d.*;
-import knight.arkham.objects.Asteroid;
+import knight.arkham.objects.Alien;
 import knight.arkham.objects.Player;
 
 import static knight.arkham.helpers.Constants.*;
@@ -21,22 +21,22 @@ public class GameContactListener implements ContactListener {
             case PLAYER_BIT | BRICK_BIT:
 
                 if (fixtureA.getFilterData().categoryBits == PLAYER_BIT){
-                    ((Player) fixtureB.getUserData()).hitByTheAsteroid();
+                    ((Player) fixtureB.getUserData()).hitByAttack();
                 }
 
                 else{
-                    ((Player) fixtureA.getUserData()).hitByTheAsteroid();
+                    ((Player) fixtureA.getUserData()).hitByAttack();
                 }
                 break;
 
             case BULLET_BIT | BRICK_BIT:
 
                 if (fixtureA.getFilterData().categoryBits == PLAYER_BIT){
-                    ((Asteroid) fixtureB.getUserData()).hitByTheBullet();
+                    ((Alien) fixtureB.getUserData()).hitByTheBullet();
 
                 }
                 else{
-                    ((Asteroid) fixtureA.getUserData()).hitByTheBullet();
+                    ((Alien) fixtureA.getUserData()).hitByTheBullet();
                 }
                 break;
 
