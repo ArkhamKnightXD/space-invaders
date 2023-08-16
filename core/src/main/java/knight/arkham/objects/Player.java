@@ -22,7 +22,7 @@ public class Player extends GameObject {
     private float bulletSpawnTime;
 
     public Player(Rectangle bounds, World world) {
-        super(bounds, world, "images/players.png", "drop.wav");
+        super(bounds, world, "images/player-ship.png", "drop.wav");
         score = 0;
         livesQuantity = 0;
         bullets = new Array<>();

@@ -78,11 +78,13 @@ public class GameScreen extends ScreenAdapter {
 
             positionX = 0;
 
-            if (i % 2 == 0)
-                spritePath = "images/light-blue-brick.png";
-
+            if (i == 0)
+                spritePath = "images/blue-alien.png";
+            else if (i >= 3)
+                spritePath = "images/green-alien.png";
             else
-                spritePath = "images/purple-brick.png";
+                spritePath = "images/red-alien.png";
+
 
             for (int j = 0; j < 11; j++) {
 
