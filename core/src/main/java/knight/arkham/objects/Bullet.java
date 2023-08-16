@@ -10,6 +10,8 @@ public class Bullet extends GameObject {
 
     public Bullet(Rectangle bounds, World world) {
         super(bounds, world, "images/ball.png", "fall.wav");
+
+        body.setLinearVelocity(0, 5 * 6);
     }
 
     @Override
@@ -19,8 +21,7 @@ public class Bullet extends GameObject {
         );
     }
 
-    public void update(){
-
-        body.setLinearVelocity(0, 5 * 6);
+    public void hitTheAlien() {
+        actualWorld.destroyBody(body);
     }
 }

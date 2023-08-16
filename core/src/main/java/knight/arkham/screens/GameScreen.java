@@ -109,6 +109,9 @@ public class GameScreen extends ScreenAdapter {
         world.step(1 / 60f, 6, 2);
 
         player.update();
+
+        for (Alien alien : aliens)
+            alien.update();
     }
 
     @Override
