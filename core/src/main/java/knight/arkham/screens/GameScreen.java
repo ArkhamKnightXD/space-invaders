@@ -8,15 +8,21 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import knight.arkham.Asteroid;
 import knight.arkham.helpers.AssetsHelper;
 import knight.arkham.helpers.GameContactListener;
+import knight.arkham.objects.Alien;
+import knight.arkham.objects.Bullet;
 import knight.arkham.objects.Player;
+import knight.arkham.objects.structures.Wall;
 import knight.arkham.scenes.Hud;
 import knight.arkham.scenes.PauseMenu;
 
+import static knight.arkham.helpers.Constants.FULL_SCREEN_HEIGHT;
 
 public class GameScreen extends ScreenAdapter {
     private final Asteroid game;
@@ -25,7 +31,9 @@ public class GameScreen extends ScreenAdapter {
     private final Hud hud;
     private final PauseMenu pauseMenu;
     private final World world;
+    private final Box2DDebugRenderer debugRenderer;
     private final Player player;
+    private final Array<Alien> aliens;
     private final Sound winSound;
     public static boolean isGamePaused;
 
@@ -42,8 +50,14 @@ public class GameScreen extends ScreenAdapter {
         GameContactListener contactListener = new GameContactListener();
 
         world.setContactListener(contactListener);
+        debugRenderer = new Box2DDebugRenderer();
 
-        player = new Player(new Rectangle(950, 350, 32, 32), world);
+        player = new Player(new Rectangle(1000, 350, 32, 32), world);
+
+        new Wall(new Rectangle(1562, FULL_SCREEN_HEIGHT, 50, FULL_SCREEN_HEIGHT), world);
+        new Wall(new Rectangle(487, FULL_SCREEN_HEIGHT, 50, FULL_SCREEN_HEIGHT), world);
+
+        aliens = createAliens();
 
         winSound = AssetsHelper.loadSound("win.wav");
 
@@ -52,6 +66,38 @@ public class GameScreen extends ScreenAdapter {
 
         isGamePaused = false;
     }
+
+    private Array<Alien> createAliens() {
+        int positionX;
+        int positionY = 0;
+        int alenPoints = 8;
+        String spritePath;
+
+        Array<Alien> temporalAliens = new Array<>();
+
+        for (int i = 0; i < 5; i++) {
+
+            positionX = 0;
+
+            if (i % 2 == 0)
+                spritePath = "images/light-blue-brick.png";
+
+            else
+                spritePath = "images/purple-brick.png";
+
+            for (int j = 0; j < 11; j++) {
+
+                temporalAliens.add(new Alien(positionX, positionY, world, spritePath, alenPoints));
+                positionX += 60;
+            }
+
+            alenPoints--;
+            positionY += 40;
+        }
+
+        return temporalAliens;
+    }
+
 
     @Override
     public void resize(int width, int height) {
@@ -75,26 +121,31 @@ public class GameScreen extends ScreenAdapter {
             draw();
         } else {
 
-//            The act method is necessary if we want that the button react to the hover animation.
             pauseMenu.stage.act();
             pauseMenu.stage.draw();
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.F1))
             isGamePaused = !isGamePaused;
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F2))
+            new Bullet(new Rectangle(player.getPixelPosition().x,
+                player.getPixelPosition().y +15, 16, 16), world);
     }
 
     private void draw() {
 
         batch.setProjectionMatrix(camera.combined);
 
-        batch.begin();
-
-        player.draw(batch);
-
-        batch.end();
+//        batch.begin();
+//
+//        player.draw(batch);
+//
+//        batch.end();
 
         hud.stage.draw();
+
+        debugRenderer.render(world, camera.combined);
     }
 
     @Override
@@ -113,5 +164,7 @@ public class GameScreen extends ScreenAdapter {
         world.dispose();
         batch.dispose();
 
+        for (Alien alien : aliens)
+            alien.dispose();
     }
 }

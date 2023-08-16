@@ -1,7 +1,7 @@
 package knight.arkham.helpers;
 
 import com.badlogic.gdx.physics.box2d.*;
-import knight.arkham.objects.Ball;
+import knight.arkham.objects.Alien;
 import knight.arkham.objects.Player;
 
 import static knight.arkham.helpers.Constants.*;
@@ -22,11 +22,11 @@ public class Box2DHelper {
         if (box2DBody.userData instanceof Player)
             fixtureDef.filter.categoryBits = PLAYER_BIT;
 
-        else if (box2DBody.userData instanceof Ball)
-            createBulletBody(box2DBody);
+        else if (box2DBody.userData instanceof Alien)
+            fixtureDef.filter.categoryBits = ALIEN_BIT;
 
         else
-            fixtureDef.filter.categoryBits = BRICK_BIT;
+            fixtureDef.filter.categoryBits = WALL_BIT;
 
         Body body = createBox2DBodyByType(box2DBody);
 

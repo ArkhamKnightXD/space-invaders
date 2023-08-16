@@ -18,7 +18,7 @@ public class GameContactListener implements ContactListener {
 
         switch (collisionDefinition) {
 
-            case PLAYER_BIT | BRICK_BIT:
+            case PLAYER_BIT | ALIEN_BIT:
 
                 if (fixtureA.getFilterData().categoryBits == PLAYER_BIT){
                     ((Player) fixtureB.getUserData()).hitByAttack();
@@ -29,7 +29,7 @@ public class GameContactListener implements ContactListener {
                 }
                 break;
 
-            case BULLET_BIT | BRICK_BIT:
+            case BULLET_BIT | ALIEN_BIT:
 
                 if (fixtureA.getFilterData().categoryBits == PLAYER_BIT){
                     ((Alien) fixtureB.getUserData()).hitByTheBullet();

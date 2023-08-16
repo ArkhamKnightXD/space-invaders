@@ -7,6 +7,7 @@ public class Constants {
     public static final int FULL_SCREEN_HEIGHT = Asteroid.INSTANCE.screenHeight;
     public static final int FULL_SCREEN_WIDTH = Asteroid.INSTANCE.screenWidth;
     public static final short PLAYER_BIT = 1;
-    public static final short BRICK_BIT = 2;
+    public static final short ALIEN_BIT = 2;
     public static final short BULLET_BIT = 4;
+    public static final short WALL_BIT = 8;
 }

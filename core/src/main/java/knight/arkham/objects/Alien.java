@@ -11,18 +11,16 @@ import knight.arkham.scenes.Hud;
 public class Alien extends GameObject {
     private boolean isDestroyed;
     private boolean setToDestroy;
-    private final int brickPoints;
-    private final Rectangle drawBounds;
+    private final int alienPoints;
 
-    public Alien(int positionX, int positionY, World world, String spritePath, int brickPoints) {
+    public Alien(int positionX, int positionY, World world, String spritePath, int points) {
         super(
             new Rectangle(
-                515 + positionX,
-                900 - positionY, 64, 20
+                740 + positionX,
+                850 - positionY, 32, 32
             ), world, spritePath, "okay.wav"
         );
-        this.brickPoints = brickPoints;
-        drawBounds = getDrawBounds();
+        alienPoints = points;
     }
 
     @Override
@@ -48,13 +46,13 @@ public class Alien extends GameObject {
     public void draw(Batch batch) {
 
         if (!isDestroyed)
-            batch.draw(sprite, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
+            super.draw(batch);
     }
 
     public void hitByTheBullet() {
         setToDestroy = true;
 
-        Hud.addScore(brickPoints);
+        Hud.addScore(alienPoints);
 
         collisionSound.play(0.6f);
     }

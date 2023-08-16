@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import knight.arkham.objects.Ball;
 import knight.arkham.objects.Player;
 
 import static knight.arkham.helpers.Constants.FULL_SCREEN_HEIGHT;
@@ -50,9 +49,9 @@ public class Hud {
 
     public static void takeAvailableHealth() {
 
-        Ball.livesQuantity -= 1;
+        Player.livesQuantity -= 1;
 
-        livesLabel.setText(Ball.livesQuantity);
+        livesLabel.setText(Player.livesQuantity -= 1);
     }
 
     public void dispose(){
