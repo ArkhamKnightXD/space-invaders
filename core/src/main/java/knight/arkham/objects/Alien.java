@@ -33,10 +33,10 @@ public class Alien extends GameObject {
     public void update() {
 
         if (setToDestroy && !isDestroyed)
-            destroyBrick();
+            destroyAlien();
     }
 
-    private void destroyBrick() {
+    private void destroyAlien() {
 
         actualWorld.destroyBody(body);
         isDestroyed = true;

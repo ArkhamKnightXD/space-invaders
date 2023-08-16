@@ -16,7 +16,6 @@ import knight.arkham.Asteroid;
 import knight.arkham.helpers.AssetsHelper;
 import knight.arkham.helpers.GameContactListener;
 import knight.arkham.objects.Alien;
-import knight.arkham.objects.Bullet;
 import knight.arkham.objects.Player;
 import knight.arkham.objects.structures.Wall;
 import knight.arkham.scenes.Hud;
@@ -104,11 +103,11 @@ public class GameScreen extends ScreenAdapter {
         game.viewport.update(width, height);
     }
 
-    private void update() {
+    private void update(float deltaTime) {
 
         world.step(1 / 60f, 6, 2);
 
-        player.update();
+        player.update(deltaTime);
 
         for (Alien alien : aliens)
             alien.update();
@@ -120,7 +119,7 @@ public class GameScreen extends ScreenAdapter {
         ScreenUtils.clear(0, 0, 0, 0);
 
         if (!isGamePaused) {
-            update();
+            update(deltaTime);
             draw();
         } else {
 
@@ -130,25 +129,26 @@ public class GameScreen extends ScreenAdapter {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.F1))
             isGamePaused = !isGamePaused;
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F2))
-            new Bullet(new Rectangle(player.getPixelPosition().x,
-                player.getPixelPosition().y +15, 16, 16), world);
     }
 
     private void draw() {
 
         batch.setProjectionMatrix(camera.combined);
 
-//        batch.begin();
-//
-//        player.draw(batch);
-//
-//        batch.end();
+        batch.begin();
+
+        player.draw(batch);
+
+        player.drawBullets(batch);
+
+        for (Alien alien : aliens)
+            alien.draw(batch);
+
+        batch.end();
 
         hud.stage.draw();
 
-        debugRenderer.render(world, camera.combined);
+//        debugRenderer.render(world, camera.combined);
     }
 
     @Override
@@ -166,6 +166,7 @@ public class GameScreen extends ScreenAdapter {
         winSound.dispose();
         world.dispose();
         batch.dispose();
+        debugRenderer.dispose();
 
         for (Alien alien : aliens)
             alien.dispose();

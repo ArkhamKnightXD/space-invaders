@@ -1,17 +1,26 @@
 package knight.arkham.objects;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.Box2DHelper;
 
+
 public class Bullet extends GameObject {
+    private boolean setToDestroy;
+    private boolean isDestroyed;
 
-    public Bullet(Rectangle bounds, World world) {
-        super(bounds, world, "images/ball.png", "fall.wav");
+    public Bullet(Vector2 position, World world) {
+        super(
+            new Rectangle(
+                position.x, position.y +15, 16, 16
+            ), world, "images/ball.png", "fall.wav"
+        );
 
-        body.setLinearVelocity(0, 5 * 6);
+        body.setLinearVelocity(0, 30);
     }
 
     @Override
@@ -21,7 +30,27 @@ public class Bullet extends GameObject {
         );
     }
 
-    public void hitTheAlien() {
+    public void update(){
+
+        if (setToDestroy && !isDestroyed)
+            destroyBullet();
+    }
+
+    private void destroyBullet() {
+
         actualWorld.destroyBody(body);
+        isDestroyed = true;
+    }
+
+    @Override
+    public void draw(Batch batch) {
+
+        if (!isDestroyed)
+            super.draw(batch);
+    }
+
+    public void hitTheAlien() {
+
+        setToDestroy = true;
     }
 }
