@@ -69,7 +69,7 @@ public class GameScreen extends ScreenAdapter {
     private Array<Alien> createAliens() {
         int positionX;
         int positionY = 0;
-        int alenPoints = 8;
+        int alienPoints = 8;
         String spritePath;
 
         Array<Alien> temporalAliens = new Array<>();
@@ -88,11 +88,11 @@ public class GameScreen extends ScreenAdapter {
 
             for (int j = 0; j < 11; j++) {
 
-                temporalAliens.add(new Alien(positionX, positionY, world, spritePath, alenPoints));
+                temporalAliens.add(new Alien(positionX, positionY, world, spritePath, alienPoints));
                 positionX += 60;
             }
 
-            alenPoints--;
+            alienPoints--;
             positionY += 40;
         }
 
@@ -112,7 +112,7 @@ public class GameScreen extends ScreenAdapter {
         player.update(deltaTime);
 
         for (Alien alien : aliens)
-            alien.update();
+            alien.update(deltaTime);
     }
 
     @Override
