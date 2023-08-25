@@ -8,7 +8,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.Box2DHelper;
 
-
 public class Bullet extends GameObject {
     private boolean setToDestroy;
     private boolean isDestroyed;

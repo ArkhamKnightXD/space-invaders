@@ -51,14 +51,6 @@ public class Player extends GameObject {
             shootBullet(deltaTime);
     }
 
-    public void drawBullets(Batch batch) {
-
-        for (Bullet bullet : bullets){
-            bullet.update();
-            bullet.draw(batch);
-        }
-    }
-
     private void shootBullet(float deltaTime) {
 
         bulletSpawnTime += deltaTime;
@@ -73,6 +65,17 @@ public class Player extends GameObject {
 
     public Vector2 getPixelPosition() {
         return new Vector2(body.getPosition().x * PIXELS_PER_METER, body.getPosition().y * PIXELS_PER_METER);
+    }
+
+    @Override
+    public void draw(Batch batch) {
+
+        for (Bullet bullet : bullets){
+            bullet.update();
+            bullet.draw(batch);
+        }
+
+        super.draw(batch);
     }
 
     public void hitByAttack() {

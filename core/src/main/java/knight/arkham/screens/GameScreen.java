@@ -17,7 +17,7 @@ import knight.arkham.helpers.AssetsHelper;
 import knight.arkham.helpers.GameContactListener;
 import knight.arkham.objects.Alien;
 import knight.arkham.objects.Player;
-import knight.arkham.objects.structures.Wall;
+import knight.arkham.objects.Wall;
 import knight.arkham.scenes.Hud;
 import knight.arkham.scenes.PauseMenu;
 
@@ -140,8 +140,6 @@ public class GameScreen extends ScreenAdapter {
         batch.begin();
 
         player.draw(batch);
-
-        player.drawBullets(batch);
 
         for (Alien alien : aliens)
             alien.draw(batch);
