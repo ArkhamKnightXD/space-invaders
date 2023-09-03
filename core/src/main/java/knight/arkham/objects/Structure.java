@@ -1,6 +1,5 @@
 package knight.arkham.objects;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -8,27 +7,23 @@ import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.Box2DHelper;
 
-public class Structure {
-
-    private final World world;
-    private final Body body;
-    private final Texture sprite;
+public class Structure extends GameObject {
     private final Rectangle drawBounds;
     private int hitCounter;
     private boolean setToDestroy;
     private boolean isDestroyed;
 
     public Structure(Rectangle bounds, World world) {
+        super(bounds, world, "images/structure.png", "break.ogg");
 
-        this.world = world;
+        drawBounds = getDrawBounds();
+    }
 
-        body = Box2DHelper.createBody(
-            new Box2DBody(bounds, 0, world, this)
+    @Override
+    protected Body createBody() {
+        return Box2DHelper.createBody(
+            new Box2DBody(actualBounds, 0, actualWorld, this)
         );
-
-        drawBounds = Box2DHelper.getDrawBounds(body, bounds);
-
-        sprite = new Texture("images/structure.png");
     }
 
     public void update(){
@@ -38,10 +33,12 @@ public class Structure {
 
     private void destroyBody() {
 
-        world.destroyBody(body);
+        actualWorld.destroyBody(body);
         isDestroyed = true;
     }
 
+
+    @Override
     public void draw(Batch batch) {
 
         if (!isDestroyed)
@@ -52,11 +49,9 @@ public class Structure {
 
         hitCounter++;
 
+        actionSound.play();
+
         if (hitCounter == 5)
             setToDestroy = true;
-    }
-
-    public void dispose (){
-        sprite.dispose();
     }
 }

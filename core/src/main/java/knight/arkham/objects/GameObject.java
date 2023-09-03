@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.AssetsHelper;
-import knight.arkham.helpers.Box2DHelper;
 
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
@@ -17,21 +16,31 @@ public abstract class GameObject {
     protected final World actualWorld;
     protected final Body body;
     protected final Texture sprite;
-    protected final Sound collisionSound;
+    protected final Sound actionSound;
 
     protected GameObject(Rectangle bounds, World world, String spritePath, String soundPath) {
         actualBounds = bounds;
         actualWorld = world;
         sprite = new Texture(spritePath);
-        collisionSound = AssetsHelper.loadSound(soundPath);
+        actionSound = AssetsHelper.loadSound(soundPath);
         body = createBody();
     }
 
     protected abstract Body createBody();
 
+    protected Rectangle getDrawBounds() {
+
+        return new Rectangle(
+            body.getPosition().x - (actualBounds.width / 2 / PIXELS_PER_METER),
+            body.getPosition().y - (actualBounds.height / 2 / PIXELS_PER_METER),
+            actualBounds.width / PIXELS_PER_METER,
+            actualBounds.height / PIXELS_PER_METER
+        );
+    }
+
     public void draw(Batch batch) {
 
-        Rectangle drawBounds = Box2DHelper.getDrawBounds(body, actualBounds);
+        Rectangle drawBounds = getDrawBounds();
 
         batch.draw(sprite, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
     }
@@ -42,6 +51,6 @@ public abstract class GameObject {
 
     public void dispose() {
         sprite.dispose();
-        collisionSound.dispose();
+        actionSound.dispose();
     }
 }

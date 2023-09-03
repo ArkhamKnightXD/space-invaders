@@ -85,6 +85,6 @@ public class Alien extends GameObject {
 
         Hud.addScore(alienPoints);
 
-        collisionSound.play(0.6f);
+        actionSound.play(0.6f);
     }
 }

@@ -19,7 +19,7 @@ public class Player extends GameObject {
     private float bulletSpawnTime;
 
     public Player(Rectangle bounds, World world) {
-        super(bounds, world, "images/player-ship.png", "drop.wav");
+        super(bounds, world, "images/player-ship.png", "laser.wav");
         score = 0;
         livesQuantity = 0;
         bullets = new Array<>();
@@ -57,6 +57,8 @@ public class Player extends GameObject {
             bullets.add(new Bullet(getPixelPosition(), actualWorld));
 
             bulletSpawnTime = 0;
+
+            actionSound.play(0.6f);
         }
     }
 
@@ -73,8 +75,16 @@ public class Player extends GameObject {
 
     public void hitByAttack() {
 
-        collisionSound.play(0.6f);
+        actionSound.play(0.6f);
 
         Hud.takeAvailableHealth();
+    }
+
+    @Override
+    public void dispose() {
+        for (Bullet bullet : bullets)
+            bullet.dispose();
+
+        super.dispose();
     }
 }
