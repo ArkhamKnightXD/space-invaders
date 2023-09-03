@@ -2,6 +2,7 @@ package knight.arkham.objects;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
@@ -78,6 +79,11 @@ public class Alien extends GameObject {
 
         if (!isDestroyed)
             super.draw(batch);
+    }
+
+    public Bullet shootBullet(){
+
+        return new Bullet(new Vector2(1000, 600), actualWorld, new Vector2(0, -15));
     }
 
     public void hitByTheBullet() {

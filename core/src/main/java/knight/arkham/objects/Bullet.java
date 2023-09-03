@@ -12,14 +12,14 @@ public class Bullet extends GameObject {
     private boolean setToDestroy;
     private boolean isDestroyed;
 
-    public Bullet(Vector2 position, World world) {
+    public Bullet(Vector2 position, World world, Vector2 velocity) {
         super(
             new Rectangle(
                 position.x, position.y + 15, 16, 16
             ), world, "images/ball.png", "fall.wav"
         );
 
-        body.setLinearVelocity(0, 30);
+        body.setLinearVelocity(velocity);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class Bullet extends GameObject {
         if (setToDestroy && !isDestroyed)
             destroyBullet();
 
-        else if (getPixelPosition().y > 1000)
+        else if (getPixelPosition().y > 1000 || getPixelPosition().y < 200)
             setToDestroy = true;
     }
 

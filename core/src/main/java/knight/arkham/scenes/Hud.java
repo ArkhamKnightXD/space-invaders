@@ -29,12 +29,12 @@ public class Hud {
 
         table.setFillParent(true);
 
-        scoreLabel = new Label("0", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         livesLabel = new Label("2", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        scoreLabel = new Label("0", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         Label worldLabel = new Label("LEVEL 01", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
-        table.add(scoreLabel).expandX().padTop(10);
         table.add(livesLabel).expandX().padTop(10);
+        table.add(scoreLabel).expandX().padTop(10);
         table.add(worldLabel).expandX().padTop(10);
 
         stage.addActor(table);
@@ -51,7 +51,7 @@ public class Hud {
 
         Player.livesQuantity -= 1;
 
-        livesLabel.setText(Player.livesQuantity -= 1);
+        livesLabel.setText(Player.livesQuantity);
     }
 
     public void dispose(){

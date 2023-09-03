@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -21,7 +22,7 @@ public class Player extends GameObject {
     public Player(Rectangle bounds, World world) {
         super(bounds, world, "images/player-ship.png", "laser.wav");
         score = 0;
-        livesQuantity = 0;
+        livesQuantity = 2;
         bullets = new Array<>();
     }
 
@@ -54,7 +55,10 @@ public class Player extends GameObject {
 
         if (bulletSpawnTime > 1) {
 
-            bullets.add(new Bullet(getPixelPosition(), actualWorld));
+            bullets.add(new Bullet(
+                new Vector2(getPixelPosition().x, getPixelPosition().y + 20),
+                actualWorld, new Vector2(0, 30)
+            ));
 
             bulletSpawnTime = 0;
 
@@ -73,8 +77,7 @@ public class Player extends GameObject {
         super.draw(batch);
     }
 
-    public void hitByAttack() {
-
+    public void hitByTheBullet() {
         actionSound.play(0.6f);
 
         Hud.takeAvailableHealth();

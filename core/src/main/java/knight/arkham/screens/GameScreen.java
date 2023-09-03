@@ -16,6 +16,7 @@ import knight.arkham.Asteroid;
 import knight.arkham.helpers.AssetsHelper;
 import knight.arkham.helpers.GameContactListener;
 import knight.arkham.objects.Alien;
+import knight.arkham.objects.Bullet;
 import knight.arkham.objects.Player;
 import knight.arkham.objects.Structure;
 import knight.arkham.scenes.Hud;
@@ -37,6 +38,8 @@ public class GameScreen extends ScreenAdapter {
     private final Array<Alien> aliens;
     private final Sound winSound;
     public static boolean isGamePaused;
+    private float bulletSpawnTime;
+    private final Array<Bullet> alienBullets;
 
     public GameScreen() {
 
@@ -68,6 +71,7 @@ public class GameScreen extends ScreenAdapter {
         pauseMenu = new PauseMenu();
 
         isGamePaused = false;
+        alienBullets = new Array<>();
     }
 
     private Array<Alien> createAliens() {
@@ -120,8 +124,19 @@ public class GameScreen extends ScreenAdapter {
         structure3.update();
         structure4.update();
 
-        for (Alien alien : aliens)
+        bulletSpawnTime += deltaTime;
+
+        for (Alien alien : aliens){
             alien.update(deltaTime);
+
+            if (bulletSpawnTime > 5){
+                alienBullets.add(alien.shootBullet());
+                bulletSpawnTime = 0;
+            }
+        }
+
+        for (Bullet bullet : alienBullets)
+            bullet.update();
     }
 
     @Override
@@ -158,11 +173,14 @@ public class GameScreen extends ScreenAdapter {
         for (Alien alien : aliens)
             alien.draw(batch);
 
+        for (Bullet bullet : alienBullets)
+            bullet.draw(batch);
+
         batch.end();
 
         hud.stage.draw();
 
-//        debugRenderer.render(world, camera.combined);
+        debugRenderer.render(world, camera.combined);
     }
 
     @Override
