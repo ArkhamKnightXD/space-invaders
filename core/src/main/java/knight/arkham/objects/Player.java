@@ -34,10 +34,10 @@ public class Player extends GameObject {
 
     public void update(float deltaTime) {
 
-        if (Gdx.input.isKeyPressed(Input.Keys.D))
+        if (getPixelPosition().x < 1520 && Gdx.input.isKeyPressed(Input.Keys.D))
             velocityX = 1.5f;
 
-        else if (Gdx.input.isKeyPressed(Input.Keys.A))
+        else if (getPixelPosition().x > 530 && Gdx.input.isKeyPressed(Input.Keys.A))
             velocityX = -1.5f;
 
         body.setLinearVelocity(velocityX * 10, 0);
@@ -63,7 +63,7 @@ public class Player extends GameObject {
     @Override
     public void draw(Batch batch) {
 
-        for (Bullet bullet : bullets){
+        for (Bullet bullet : bullets) {
             bullet.update();
             bullet.draw(batch);
         }

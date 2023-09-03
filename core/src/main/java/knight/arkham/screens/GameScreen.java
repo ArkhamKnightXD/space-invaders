@@ -17,11 +17,9 @@ import knight.arkham.helpers.AssetsHelper;
 import knight.arkham.helpers.GameContactListener;
 import knight.arkham.objects.Alien;
 import knight.arkham.objects.Player;
-import knight.arkham.objects.Wall;
+import knight.arkham.objects.Structure;
 import knight.arkham.scenes.Hud;
 import knight.arkham.scenes.PauseMenu;
-
-import static knight.arkham.helpers.Constants.FULL_SCREEN_HEIGHT;
 
 public class GameScreen extends ScreenAdapter {
     private final Asteroid game;
@@ -32,6 +30,10 @@ public class GameScreen extends ScreenAdapter {
     private final World world;
     private final Box2DDebugRenderer debugRenderer;
     private final Player player;
+    private final Structure structure;
+    private final Structure structure2;
+    private final Structure structure3;
+    private final Structure structure4;
     private final Array<Alien> aliens;
     private final Sound winSound;
     public static boolean isGamePaused;
@@ -53,8 +55,10 @@ public class GameScreen extends ScreenAdapter {
 
         player = new Player(new Rectangle(1000, 350, 32, 32), world);
 
-        new Wall(new Rectangle(1562, FULL_SCREEN_HEIGHT, 50, FULL_SCREEN_HEIGHT), world);
-        new Wall(new Rectangle(487, FULL_SCREEN_HEIGHT, 50, FULL_SCREEN_HEIGHT), world);
+        structure = new Structure(new Rectangle(650, 450, 48, 32), world);
+        structure2 = new Structure(new Rectangle(900, 450, 48, 32), world);
+        structure3 = new Structure(new Rectangle(1150, 450, 48, 32), world);
+        structure4 = new Structure(new Rectangle(1400, 450, 48, 32), world);
 
         aliens = createAliens();
 
@@ -141,6 +145,11 @@ public class GameScreen extends ScreenAdapter {
 
         player.draw(batch);
 
+        structure.draw(batch);
+        structure2.draw(batch);
+        structure3.draw(batch);
+        structure4.draw(batch);
+
         for (Alien alien : aliens)
             alien.draw(batch);
 
@@ -167,6 +176,7 @@ public class GameScreen extends ScreenAdapter {
         world.dispose();
         batch.dispose();
         debugRenderer.dispose();
+        structure.dispose();
 
         for (Alien alien : aliens)
             alien.dispose();
