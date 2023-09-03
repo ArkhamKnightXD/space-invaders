@@ -9,12 +9,20 @@ import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.Box2DHelper;
 
 public class Structure {
+
+    private final World world;
+    private final Body body;
     private final Texture sprite;
     private final Rectangle drawBounds;
+    private int hitCounter;
+    private boolean setToDestroy;
+    private boolean isDestroyed;
 
     public Structure(Rectangle bounds, World world) {
 
-        Body body = Box2DHelper.createBody(
+        this.world = world;
+
+        body = Box2DHelper.createBody(
             new Box2DBody(bounds, 0, world, this)
         );
 
@@ -23,13 +31,32 @@ public class Structure {
         sprite = new Texture("images/structure.png");
     }
 
+    public void update(){
+        if (setToDestroy && !isDestroyed)
+            destroyBody();
+    }
+
+    private void destroyBody() {
+
+        world.destroyBody(body);
+        isDestroyed = true;
+    }
+
     public void draw(Batch batch) {
 
-        batch.draw(sprite, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
+        if (!isDestroyed)
+            batch.draw(sprite, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
+    }
+
+    public void hitByTheBullet() {
+
+        hitCounter++;
+
+        if (hitCounter == 5)
+            setToDestroy = true;
     }
 
     public void dispose (){
-
         sprite.dispose();
     }
 }

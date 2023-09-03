@@ -115,6 +115,11 @@ public class GameScreen extends ScreenAdapter {
 
         player.update(deltaTime);
 
+        structure.update();
+        structure2.update();
+        structure3.update();
+        structure4.update();
+
         for (Alien alien : aliens)
             alien.update(deltaTime);
     }

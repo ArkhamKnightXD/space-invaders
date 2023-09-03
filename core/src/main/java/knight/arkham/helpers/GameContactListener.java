@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import knight.arkham.objects.Alien;
 import knight.arkham.objects.Bullet;
 import knight.arkham.objects.Player;
+import knight.arkham.objects.Structure;
 
 import static knight.arkham.helpers.Constants.*;
 
@@ -38,6 +39,18 @@ public class GameContactListener implements ContactListener {
                 }
                 else{
                     ((Alien) fixtureB.getUserData()).hitByTheBullet();
+                    ((Bullet) fixtureA.getUserData()).hitTheAlien();
+                }
+                break;
+
+            case BULLET_BIT | STRUCTURE_BIT:
+
+                if (fixtureA.getFilterData().categoryBits == STRUCTURE_BIT){
+                    ((Structure) fixtureA.getUserData()).hitByTheBullet();
+                    ((Bullet) fixtureB.getUserData()).hitTheAlien();
+                }
+                else{
+                    ((Structure) fixtureB.getUserData()).hitByTheBullet();
                     ((Bullet) fixtureA.getUserData()).hitTheAlien();
                 }
                 break;

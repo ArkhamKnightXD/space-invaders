@@ -31,7 +31,7 @@ public class Box2DHelper {
             createBulletBody(box2DBody);
 
         else
-            fixtureDef.filter.categoryBits = WALL_BIT;
+            fixtureDef.filter.categoryBits = STRUCTURE_BIT;
 
         Body body = createBox2DBodyByType(box2DBody);
 
