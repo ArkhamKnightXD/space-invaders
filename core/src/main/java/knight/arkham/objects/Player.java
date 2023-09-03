@@ -4,15 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.Box2DHelper;
 import knight.arkham.scenes.Hud;
-
-import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public class Player extends GameObject {
     public static int score;
@@ -61,10 +58,6 @@ public class Player extends GameObject {
 
             bulletSpawnTime = 0;
         }
-    }
-
-    public Vector2 getPixelPosition() {
-        return new Vector2(body.getPosition().x * PIXELS_PER_METER, body.getPosition().y * PIXELS_PER_METER);
     }
 
     @Override

@@ -14,6 +14,8 @@ public class Alien extends GameObject {
     private final int alienPoints;
     private float stateTimer;
     private float velocityX;
+    private float changeVelocityTimer;
+    private boolean shouldGoDown;
 
     public Alien(int positionX, int positionY, World world, String spritePath, int points) {
         super(
@@ -24,7 +26,7 @@ public class Alien extends GameObject {
         );
         alienPoints = points;
 
-        velocityX = 2;
+        velocityX = 20;
         body.setLinearVelocity(velocityX,0);
     }
 
@@ -41,17 +43,28 @@ public class Alien extends GameObject {
             destroyAlien();
 
         stateTimer += deltaTime;
+        changeVelocityTimer += deltaTime;
 
-        if (stateTimer > 2.8f){
+        if (stateTimer > 0.5f){
+            body.setLinearVelocity(velocityX,0);
 
-            if (stateTimer < 3.5f)
-                body.setLinearVelocity(0,-1);
-        }
-        if (stateTimer > 3.5f){
-            body.setLinearVelocity(-2,0);
+            stateTimer = 0;
 
-            stateTimer = -3.6f;
-        }
+        } else if (changeVelocityTimer > 8){
+
+            velocityX *= -1;
+            changeVelocityTimer = -8;
+
+            stateTimer = 0;
+
+            shouldGoDown = true;
+        } else if (shouldGoDown) {
+
+            body.setLinearVelocity(0,-40);
+
+            shouldGoDown = false;
+        } else
+            body.setLinearVelocity(0,0);
     }
 
     private void destroyAlien() {

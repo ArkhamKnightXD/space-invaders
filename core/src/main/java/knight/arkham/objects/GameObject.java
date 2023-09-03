@@ -4,6 +4,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.AssetsHelper;
@@ -42,6 +43,10 @@ public abstract class GameObject {
         Rectangle drawBounds = getDrawBounds();
 
         batch.draw(sprite, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
+    }
+
+    protected Vector2 getPixelPosition() {
+        return new Vector2(body.getPosition().x * PIXELS_PER_METER, body.getPosition().y * PIXELS_PER_METER);
     }
 
     public void dispose() {

@@ -15,7 +15,7 @@ public class Bullet extends GameObject {
     public Bullet(Vector2 position, World world) {
         super(
             new Rectangle(
-                position.x, position.y +15, 16, 16
+                position.x, position.y + 15, 16, 16
             ), world, "images/ball.png", "fall.wav"
         );
 
@@ -33,6 +33,9 @@ public class Bullet extends GameObject {
 
         if (setToDestroy && !isDestroyed)
             destroyBullet();
+
+        else if (getPixelPosition().y > 1000)
+            setToDestroy = true;
     }
 
     private void destroyBullet() {
