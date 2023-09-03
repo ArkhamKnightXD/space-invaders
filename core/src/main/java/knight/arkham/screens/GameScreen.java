@@ -15,10 +15,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import knight.arkham.Asteroid;
 import knight.arkham.helpers.AssetsHelper;
 import knight.arkham.helpers.GameContactListener;
-import knight.arkham.objects.Alien;
-import knight.arkham.objects.Bullet;
-import knight.arkham.objects.Player;
-import knight.arkham.objects.Structure;
+import knight.arkham.objects.*;
 import knight.arkham.scenes.Hud;
 import knight.arkham.scenes.PauseMenu;
 
@@ -39,7 +36,7 @@ public class GameScreen extends ScreenAdapter {
     private final Sound winSound;
     public static boolean isGamePaused;
     private float bulletSpawnTime;
-    private final Array<Bullet> alienBullets;
+    private final Array<AlienBullet> alienBullets;
 
     public GameScreen() {
 
@@ -135,7 +132,7 @@ public class GameScreen extends ScreenAdapter {
             }
         }
 
-        for (Bullet bullet : alienBullets)
+        for (AlienBullet bullet : alienBullets)
             bullet.update();
     }
 
@@ -173,7 +170,7 @@ public class GameScreen extends ScreenAdapter {
         for (Alien alien : aliens)
             alien.draw(batch);
 
-        for (Bullet bullet : alienBullets)
+        for (AlienBullet bullet : alienBullets)
             bullet.draw(batch);
 
         batch.end();

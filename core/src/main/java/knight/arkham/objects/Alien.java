@@ -81,9 +81,9 @@ public class Alien extends GameObject {
             super.draw(batch);
     }
 
-    public Bullet shootBullet(){
+    public AlienBullet shootBullet(){
 
-        return new Bullet(new Vector2(1000, 600), actualWorld, new Vector2(0, -15));
+        return new AlienBullet(new Vector2(1000, 600), actualWorld);
     }
 
     public void hitByTheBullet() {

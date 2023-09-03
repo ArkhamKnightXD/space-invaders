@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -55,10 +54,7 @@ public class Player extends GameObject {
 
         if (bulletSpawnTime > 1) {
 
-            bullets.add(new Bullet(
-                new Vector2(getPixelPosition().x, getPixelPosition().y + 20),
-                actualWorld, new Vector2(0, 30)
-            ));
+            bullets.add(new Bullet(getPixelPosition(), actualWorld));
 
             bulletSpawnTime = 0;
 

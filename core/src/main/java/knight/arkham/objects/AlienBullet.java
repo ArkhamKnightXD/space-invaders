@@ -8,18 +8,18 @@ import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.Box2DHelper;
 
-public class Bullet extends GameObject {
+public class AlienBullet extends GameObject {
     private boolean setToDestroy;
     private boolean isDestroyed;
 
-    public Bullet(Vector2 position, World world) {
+    public AlienBullet(Vector2 position, World world) {
         super(
             new Rectangle(
-                position.x, position.y + 15, 16, 16
+                position.x, position.y, 16, 16
             ), world, "images/ball.png", "fall.wav"
         );
 
-        body.setLinearVelocity(0, 30);
+        body.setLinearVelocity(0, -15);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class Bullet extends GameObject {
         if (setToDestroy && !isDestroyed)
             destroyBullet();
 
-        else if (getPixelPosition().y > 1000 || getPixelPosition().y < 200)
+        else if (getPixelPosition().y < 200)
             setToDestroy = true;
     }
 

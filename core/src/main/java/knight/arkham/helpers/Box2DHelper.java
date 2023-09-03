@@ -26,9 +26,6 @@ public class Box2DHelper {
         else if (box2DBody.userData instanceof Alien)
             fixtureDef.filter.categoryBits = ALIEN_BIT;
 
-        else if (box2DBody.userData instanceof Bullet)
-            createBulletBody(box2DBody);
-
         else
             fixtureDef.filter.categoryBits = STRUCTURE_BIT;
 
@@ -53,7 +50,11 @@ public class Box2DHelper {
 
         fixtureDef.density = box2DBody.density;
 
-        fixtureDef.filter.categoryBits = BULLET_BIT;
+        if (box2DBody.userData instanceof Bullet)
+            fixtureDef.filter.categoryBits = BULLET_BIT;
+
+        else
+            fixtureDef.filter.categoryBits = ALIEN_BULLET_BIT;
 
         Body body = createBox2DBodyByType(box2DBody);
 

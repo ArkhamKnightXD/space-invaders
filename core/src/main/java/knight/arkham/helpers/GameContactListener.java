@@ -1,10 +1,7 @@
 package knight.arkham.helpers;
 
 import com.badlogic.gdx.physics.box2d.*;
-import knight.arkham.objects.Alien;
-import knight.arkham.objects.Bullet;
-import knight.arkham.objects.Player;
-import knight.arkham.objects.Structure;
+import knight.arkham.objects.*;
 
 import static knight.arkham.helpers.Constants.*;
 
@@ -20,16 +17,15 @@ public class GameContactListener implements ContactListener {
 
         switch (collisionDefinition) {
 
-
             case BULLET_BIT | ALIEN_BIT:
 
                 if (fixtureA.getFilterData().categoryBits == ALIEN_BIT){
                     ((Alien) fixtureA.getUserData()).hitByTheBullet();
-                    ((Bullet) fixtureB.getUserData()).hitTheAlien();
+                    ((Bullet) fixtureB.getUserData()).collision();
                 }
                 else{
                     ((Alien) fixtureB.getUserData()).hitByTheBullet();
-                    ((Bullet) fixtureA.getUserData()).hitTheAlien();
+                    ((Bullet) fixtureA.getUserData()).collision();
                 }
                 break;
 
@@ -37,23 +33,23 @@ public class GameContactListener implements ContactListener {
 
                 if (fixtureA.getFilterData().categoryBits == STRUCTURE_BIT){
                     ((Structure) fixtureA.getUserData()).hitByTheBullet();
-                    ((Bullet) fixtureB.getUserData()).hitTheAlien();
+                    ((Bullet) fixtureB.getUserData()).collision();
                 }
                 else{
                     ((Structure) fixtureB.getUserData()).hitByTheBullet();
-                    ((Bullet) fixtureA.getUserData()).hitTheAlien();
+                    ((Bullet) fixtureA.getUserData()).collision();
                 }
                 break;
 
-            case BULLET_BIT | PLAYER_BIT:
+            case ALIEN_BULLET_BIT | PLAYER_BIT:
 
                 if (fixtureA.getFilterData().categoryBits == PLAYER_BIT){
                     ((Player) fixtureA.getUserData()).hitByTheBullet();
-                    ((Bullet) fixtureB.getUserData()).hitTheAlien();
+                    ((AlienBullet) fixtureB.getUserData()).collision();
                 }
                 else{
                     ((Player) fixtureB.getUserData()).hitByTheBullet();
-                    ((Bullet) fixtureA.getUserData()).hitTheAlien();
+                    ((AlienBullet) fixtureA.getUserData()).collision();
                 }
                 break;
 
