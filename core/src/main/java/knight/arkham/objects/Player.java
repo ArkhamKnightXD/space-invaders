@@ -58,7 +58,7 @@ public class Player extends GameObject {
 
             bulletSpawnTime = 0;
 
-            actionSound.play(0.6f);
+            actionSound.play(0.4f);
         }
     }
 

@@ -28,15 +28,13 @@ public class GameScreen extends ScreenAdapter {
     private final World world;
     private final Box2DDebugRenderer debugRenderer;
     private final Player player;
-    private final Structure structure;
-    private final Structure structure2;
-    private final Structure structure3;
-    private final Structure structure4;
+    private final Array<Structure> structures;
     private final Array<Alien> aliens;
     private final Sound winSound;
-    public static boolean isGamePaused;
     private float bulletSpawnTime;
     private final Array<AlienBullet> alienBullets;
+    public static boolean isGamePaused;
+
 
     public GameScreen() {
 
@@ -48,17 +46,20 @@ public class GameScreen extends ScreenAdapter {
 
         world = new World(new Vector2(0, 0), true);
 
-        GameContactListener contactListener = new GameContactListener();
+        world.setContactListener(new GameContactListener());
 
-        world.setContactListener(contactListener);
         debugRenderer = new Box2DDebugRenderer();
 
         player = new Player(new Rectangle(1000, 350, 32, 32), world);
 
-        structure = new Structure(new Rectangle(650, 450, 48, 32), world);
-        structure2 = new Structure(new Rectangle(900, 450, 48, 32), world);
-        structure3 = new Structure(new Rectangle(1150, 450, 48, 32), world);
-        structure4 = new Structure(new Rectangle(1400, 450, 48, 32), world);
+        Structure structure = new Structure(new Rectangle(650, 450, 48, 32), world);
+        Structure structure2 = new Structure(new Rectangle(900, 450, 48, 32), world);
+        Structure structure3 = new Structure(new Rectangle(1150, 450, 48, 32), world);
+        Structure structure4 = new Structure(new Rectangle(1400, 450, 48, 32), world);
+
+        structures = new Array<>();
+
+        structures.add(structure, structure2, structure3, structure4);
 
         aliens = createAliens();
 
@@ -67,8 +68,9 @@ public class GameScreen extends ScreenAdapter {
         hud = new Hud();
         pauseMenu = new PauseMenu();
 
-        isGamePaused = false;
         alienBullets = new Array<>();
+
+        isGamePaused = false;
     }
 
     private Array<Alien> createAliens() {
@@ -116,14 +118,12 @@ public class GameScreen extends ScreenAdapter {
 
         player.update(deltaTime);
 
-        structure.update();
-        structure2.update();
-        structure3.update();
-        structure4.update();
+        for (Structure structure : structures)
+            structure.update();
 
         bulletSpawnTime += deltaTime;
 
-        for (Alien alien : aliens){
+        for (Alien alien : aliens) {
             alien.update(deltaTime);
 
             if (bulletSpawnTime > 5){
@@ -162,22 +162,20 @@ public class GameScreen extends ScreenAdapter {
 
         player.draw(batch);
 
-        structure.draw(batch);
-        structure2.draw(batch);
-        structure3.draw(batch);
-        structure4.draw(batch);
-
         for (Alien alien : aliens)
             alien.draw(batch);
 
         for (AlienBullet bullet : alienBullets)
             bullet.draw(batch);
 
+        for (Structure structure : structures)
+            structure.draw(batch);
+
         batch.end();
 
         hud.stage.draw();
 
-        debugRenderer.render(world, camera.combined);
+//        debugRenderer.render(world, camera.combined);
     }
 
     @Override
@@ -196,7 +194,9 @@ public class GameScreen extends ScreenAdapter {
         world.dispose();
         batch.dispose();
         debugRenderer.dispose();
-        structure.dispose();
+
+        for (Structure structure : structures)
+            structure.dispose();
 
         for (Alien alien : aliens)
             alien.dispose();
