@@ -175,7 +175,7 @@ public class GameScreen extends ScreenAdapter {
 
         hud.stage.draw();
 
-//        debugRenderer.render(world, camera.combined);
+        debugRenderer.render(world, camera.combined);
     }
 
     @Override

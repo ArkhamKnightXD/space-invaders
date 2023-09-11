@@ -45,19 +45,10 @@ public abstract class GameObject {
         );
     }
 
-    private Rectangle getUpdatedDrawBounds() {
-
-        return new Rectangle(
-            body.getPosition().x - drawBounds.width,
-            body.getPosition().y - drawBounds.height,
-            drawBounds.width, drawBounds.height
-        );
-    }
-
     public void draw(Batch batch) {
 
         if(!hasStaticBody)
-            drawBounds = getUpdatedDrawBounds();
+            drawBounds = getDrawBounds();
 
         batch.draw(sprite, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
     }
