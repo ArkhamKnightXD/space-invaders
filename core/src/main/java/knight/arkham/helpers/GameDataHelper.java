@@ -6,9 +6,11 @@ import knight.arkham.objects.Player;
 
 public class GameDataHelper {
 
+    private static final String dataFilename = "space-invaders-data";
+
     public static void saveHighScore(){
 
-        Preferences preferences = Gdx.app.getPreferences("breakout-data");
+        Preferences preferences = Gdx.app.getPreferences(dataFilename);
 
         if (Player.score < loadHighScore())
             return;
@@ -20,7 +22,7 @@ public class GameDataHelper {
 
     public static int loadHighScore(){
 
-        Preferences preferences = Gdx.app.getPreferences("breakout-data");
+        Preferences preferences = Gdx.app.getPreferences(dataFilename);
 
         return preferences.getInteger("playerScore");
     }
