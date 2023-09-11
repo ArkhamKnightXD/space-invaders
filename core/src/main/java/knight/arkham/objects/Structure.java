@@ -8,15 +8,12 @@ import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.Box2DHelper;
 
 public class Structure extends GameObject {
-    private final Rectangle drawBounds;
     private int hitCounter;
     private boolean setToDestroy;
     private boolean isDestroyed;
 
     public Structure(Rectangle bounds, World world) {
         super(bounds, world, "images/structure.png", "break.ogg");
-
-        drawBounds = getDrawBounds();
     }
 
     @Override
@@ -37,12 +34,11 @@ public class Structure extends GameObject {
         isDestroyed = true;
     }
 
-
     @Override
     public void draw(Batch batch) {
 
         if (!isDestroyed)
-            batch.draw(sprite, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
+            super.draw(batch);
     }
 
     public void hitByTheBullet() {
