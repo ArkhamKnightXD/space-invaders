@@ -18,7 +18,6 @@ public abstract class GameObject {
     protected final Texture sprite;
     protected final Sound actionSound;
     protected final Body body;
-    private final boolean hasStaticBody;
     private Rectangle drawBounds;
 
     protected GameObject(Rectangle bounds, World world, String spritePath, String soundPath) {
@@ -28,7 +27,6 @@ public abstract class GameObject {
         actionSound = AssetsHelper.loadSound(soundPath);
 
         body = createBody();
-        hasStaticBody = body.getType() == BodyDef.BodyType.StaticBody;
 
         drawBounds = getDrawBounds();
     }
@@ -47,7 +45,7 @@ public abstract class GameObject {
 
     public void draw(Batch batch) {
 
-        if(!hasStaticBody)
+        if(body.getType() != BodyDef.BodyType.StaticBody)
             drawBounds = getDrawBounds();
 
         batch.draw(sprite, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
