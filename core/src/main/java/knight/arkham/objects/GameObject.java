@@ -51,7 +51,7 @@ public abstract class GameObject {
         batch.draw(sprite, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
     }
 
-    protected Vector2 getPixelPosition() {
+    public Vector2 getPixelPosition() {
         return new Vector2(
             body.getPosition().x * PIXELS_PER_METER,
             body.getPosition().y * PIXELS_PER_METER

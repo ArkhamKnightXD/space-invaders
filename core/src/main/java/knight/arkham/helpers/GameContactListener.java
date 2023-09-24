@@ -41,6 +41,18 @@ public class GameContactListener implements ContactListener {
                 }
                 break;
 
+            case ALIEN_BULLET_BIT | STRUCTURE_BIT:
+
+                if (fixtureA.getFilterData().categoryBits == STRUCTURE_BIT){
+                    ((Structure) fixtureA.getUserData()).hitByTheBullet();
+                    ((AlienBullet) fixtureB.getUserData()).collision();
+                }
+                else{
+                    ((Structure) fixtureB.getUserData()).hitByTheBullet();
+                    ((AlienBullet) fixtureA.getUserData()).collision();
+                }
+                break;
+
             case ALIEN_BULLET_BIT | PLAYER_BIT:
 
                 if (fixtureA.getFilterData().categoryBits == PLAYER_BIT){

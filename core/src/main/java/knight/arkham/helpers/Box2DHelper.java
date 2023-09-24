@@ -53,8 +53,10 @@ public class Box2DHelper {
         if (box2DBody.userData instanceof Bullet)
             fixtureDef.filter.categoryBits = BULLET_BIT;
 
-        else
+        else {
             fixtureDef.filter.categoryBits = ALIEN_BULLET_BIT;
+            fixtureDef.filter.maskBits = PLAYER_BIT | STRUCTURE_BIT;
+        }
 
         Body body = createBox2DBodyByType(box2DBody);
 
