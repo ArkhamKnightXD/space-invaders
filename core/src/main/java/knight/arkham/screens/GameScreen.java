@@ -35,8 +35,10 @@ public class GameScreen extends ScreenAdapter {
     private final Array<Structure> structures;
     private final Array<Alien> aliens;
     private final Sound winSound;
+    private final Array<Bullet> bullets;
     private final Array<AlienBullet> alienBullets;
-    private long lastBulletTime;
+    private long lastAlienBulletTime;
+    private float bulletSpawnTime;
     public static boolean isGamePaused;
 
     public GameScreen() {
@@ -71,6 +73,7 @@ public class GameScreen extends ScreenAdapter {
         hud = new Hud();
         pauseMenu = new PauseMenu();
 
+        bullets = new Array<>();
         alienBullets = new Array<>();
         spawnAlienBullet();
 
@@ -87,11 +90,9 @@ public class GameScreen extends ScreenAdapter {
         bulletBounds.x = MathUtils.random(firstAlienXPosition, lastAlienXPosition - 32);
         bulletBounds.y = 680;
 
-        AlienBullet bullet = new AlienBullet(new Vector2(bulletBounds.x, bulletBounds.y), world);
+        alienBullets.add(new AlienBullet(new Vector2(bulletBounds.x, bulletBounds.y), world));
 
-        alienBullets.add(bullet);
-
-        lastBulletTime = TimeUtils.nanoTime();
+        lastAlienBulletTime = TimeUtils.nanoTime();
     }
 
     private Array<Alien> createAliens() {
@@ -137,7 +138,7 @@ public class GameScreen extends ScreenAdapter {
 
         world.step(1 / 60f, 6, 2);
 
-        player.update(deltaTime);
+        player.update();
 
         for (Structure structure : structures)
             structure.update();
@@ -148,10 +149,28 @@ public class GameScreen extends ScreenAdapter {
         for (AlienBullet bullet : alienBullets)
             bullet.update();
 
-        if(TimeUtils.nanoTime() - lastBulletTime > 2000000000)
+        if(TimeUtils.nanoTime() - lastAlienBulletTime > 2000000000)
             spawnAlienBullet();
 
         clearAlienBulletArray();
+
+        for (Bullet bullet : bullets)
+            bullet.update();
+
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
+            shootBullet(deltaTime);
+    }
+
+    private void shootBullet(float deltaTime) {
+
+        bulletSpawnTime += deltaTime;
+
+        if (bulletSpawnTime > 1) {
+
+            bullets.add(new Bullet(player.getPixelPosition(), world));
+
+            bulletSpawnTime = 0;
+        }
     }
 
 
@@ -198,6 +217,9 @@ public class GameScreen extends ScreenAdapter {
         for (AlienBullet bullet : alienBullets)
             bullet.draw(batch);
 
+        for (Bullet bullet : bullets)
+            bullet.draw(batch);
+
         for (Structure structure : structures)
             structure.draw(batch);
 
@@ -205,7 +227,7 @@ public class GameScreen extends ScreenAdapter {
 
         hud.stage.draw();
 
-//        debugRenderer.render(world, camera.combined);
+        debugRenderer.render(world, camera.combined);
     }
 
     @Override
