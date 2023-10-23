@@ -45,7 +45,7 @@ public abstract class GameObject {
 
     public void draw(Batch batch) {
 
-        if(body.getType() != BodyDef.BodyType.StaticBody)
+        if(body.getType() == BodyDef.BodyType.DynamicBody)
             drawBounds = getDrawBounds();
 
         batch.draw(sprite, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
